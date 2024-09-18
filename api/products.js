@@ -1,6 +1,9 @@
-// /api/products.js
+/* // api/graphql.js
+const { graphql } = require('graphql');
+const { parse } = require('url');
+const schema = require('../graphql/schema');
+const resolvers = require('../graphql/models');
 const mongoose = require('mongoose');
-const Product = require('../models/Product'); // Adjust the path if necessary
 
 const uri = process.env.MONGODB_URI || `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/products`;
 
@@ -26,9 +29,9 @@ async function connectToDatabase() {
 }
 
 module.exports = async (req, res) => {
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', 'https://ims-one-theta.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  // Handle CORS
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Replace '*' with your frontend domain in production
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
@@ -36,17 +39,48 @@ module.exports = async (req, res) => {
     return;
   }
 
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method Not Allowed' });
+    return;
+  }
+
   try {
     await connectToDatabase();
 
-    if (req.method === 'GET') {
-      const products = await Product.find();
-      res.status(200).json(products);
-    } else {
-      res.status(405).json({ error: 'Method Not Allowed' });
-    }
+    const { query } = parse(req.url, true);
+
+    const body = await getRequestBody(req);
+
+    const result = await graphql(
+      schema,
+      body.query,
+      resolvers,
+      null,
+      body.variables,
+      body.operationName
+    );
+
+    res.status(200).json(result);
   } catch (error) {
-    console.error('Error in /api/products:', error);
+    console.error('Error in GraphQL serverless function:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+// Helper function to parse the request body
+function getRequestBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = '';
+    req.on('data', (chunk) => {
+      body += chunk.toString();
+    });
+    req.on('end', () => {
+      try {
+        resolve(JSON.parse(body));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  });
+}
+ */
