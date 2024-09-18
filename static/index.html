@@ -14,7 +14,7 @@
     <script>
         // Function to fetch data from the server
         function fetchData() {
-            fetch('http://localhost:4000')
+            fetch('/poducts')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
