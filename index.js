@@ -22,13 +22,10 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
 
 
 
-
-
-
 app.use(cors()); // Enable CORS
 app.use(express.static(path.join(__dirname, "static"))); // Middleware for parsing JSON bodie
 app.use(express.json()); // Middleware for parsing JSON bodies
- app.use('/', productRoutes);
+ app.use('/products', productRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
