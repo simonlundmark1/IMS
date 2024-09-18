@@ -4,7 +4,9 @@
   "description": "https://chasacademy.instructure.com/courses/289/assignments/1106?module_item_id=11598",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+
   },
   "keywords": [],
   "author": "",
