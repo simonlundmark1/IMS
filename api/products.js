@@ -1,6 +1,6 @@
 // /api/products.js
 const mongoose = require('mongoose');
-const Product = require('../models/Product'); // Adjust the path as necessary
+const Product = require('../graphql/models/Product'); // Adjust the path as necessary
 
 const uri = process.env.MONGODB_URI || `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/products`;
 
@@ -28,7 +28,7 @@ async function connectToDatabase() {
 
 module.exports = async (req, res) => {
   // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '/https://ims-one-theta.vercel.app/'); // Replace '*' with your frontend domain in production
+  res.setHeader('Access-Control-Allow-Origin', 'https://ims-one-theta.vercel.app/'); // Replace '*' with your frontend domain in production
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
