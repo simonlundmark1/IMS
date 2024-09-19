@@ -1,4 +1,4 @@
-/* // api/graphql.js
+ // api/graphql.js
 const { graphql } = require('graphql');
 const { parse } = require('url');
 const schema = require('../graphql/schema');
@@ -83,4 +83,3 @@ function getRequestBody(req) {
     });
   });
 }
- */

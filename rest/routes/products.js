@@ -1,8 +1,8 @@
-/* const express = require('express');
+ const express = require('express');
 
 const router = express.Router();
-/* const productModel = require ('./db/models/product')
-const { createProduct } = require('../db/productCrud') */
+const productModel = require ('../db/models/product')
+const { createProduct } = require('../db/productCrud') 
 
 const {
     findProduct,
@@ -410,4 +410,4 @@ module.exports = router;
             ."            ;'  ;"*-.    `
             ;   ____      ;//'     "-   `,
             `+   .-/                 ".\\;
-              `*" /                */ */
+              `*" /                */
