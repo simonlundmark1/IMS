@@ -8,8 +8,6 @@ const { graphqlHTTP } = require('express-graphql');
 const schema = require('./graphql/schema'); // <-- Import the GraphQL schema
 const resolvers = require('./graphql/models'); // Import the resolvers
 
-
-
 require('dotenv').config();
 const productRoutes = require('./rest/routes/products.js'); // Ensure path is correct
 
@@ -17,23 +15,23 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('Failed to connect to MongoDB', err));
 
+// CORS configuration
+const corsOptions = {
+    origin: 'https://ims-one-theta.vercel.app', // Replace with your frontend URL
+    optionsSuccessStatus: 200 // For legacy browser support
+};
 
-
-
-
-
-app.use(cors()); // Enable CORS
+app.use(cors(corsOptions)); // Enable CORS with options
 app.use(express.static(path.join(__dirname, "static"))); // Middleware for parsing JSON bodie
 app.use(express.json()); // Middleware for parsing JSON bodies
- app.use('/products', productRoutes);
+app.use('/products', productRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
- app.use("/graphql", graphqlHTTP({
+app.use("/graphql", graphqlHTTP({
     schema: schema,
     rootValue: resolvers, // Connects resolvers to the schema
     graphiql: true
-    
 }));
 
 app.get("/", (req, res) => {
